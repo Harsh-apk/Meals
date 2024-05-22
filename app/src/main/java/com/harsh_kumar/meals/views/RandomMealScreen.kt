@@ -1,4 +1,4 @@
-package com.harsh_kumar.meals.screens
+package com.harsh_kumar.meals.views
 
 import android.content.Intent
 import android.net.Uri
@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.harsh_kumar.meals.types.Meal
+import com.harsh_kumar.meals.model.Meal
 import com.harsh_kumar.meals.ui.theme.GreenBg
 import com.harsh_kumar.meals.viewModels.RandomMealViewModel
 
@@ -67,7 +67,7 @@ fun RandomMealScreen(navController: NavController) {
 }
 
 @Composable
-fun RandomMealItem(meal:Meal,navController: NavController) {
+fun RandomMealItem(meal: Meal, navController: NavController) {
     val context = LocalContext.current
     var intent :Intent
 

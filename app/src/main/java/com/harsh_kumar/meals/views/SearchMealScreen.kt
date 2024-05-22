@@ -1,4 +1,4 @@
-package com.harsh_kumar.meals.screens
+package com.harsh_kumar.meals.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.harsh_kumar.meals.types.Meal
+import com.harsh_kumar.meals.model.Meal
 import com.harsh_kumar.meals.ui.theme.GreenBg
 import com.harsh_kumar.meals.viewModels.SearchMealViewModel
 

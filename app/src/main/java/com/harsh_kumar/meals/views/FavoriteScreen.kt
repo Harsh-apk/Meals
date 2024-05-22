@@ -1,4 +1,4 @@
-package com.harsh_kumar.meals.screens
+package com.harsh_kumar.meals.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,18 +17,24 @@ import androidx.navigation.NavController
 import com.harsh_kumar.meals.ui.theme.GreenBg
 
 @Composable
-fun FavoriteScreen(navController: NavController){
+fun FavoriteScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
 
+        Column(
+            modifier = Modifier
+                .background(color = GreenBg)
+                .fillMaxWidth()
+                .fillMaxHeight(0.92f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Coming Soon ...",
+                fontSize = TextUnit(value = 24f, TextUnitType.Sp),
+                color = Color.White
+            )
 
-    Column(modifier = Modifier
-
-        .background(color = GreenBg)
-        .fillMaxWidth()
-        .fillMaxHeight(0.92f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
-        Text(text = "Coming Soon ...", fontSize = TextUnit(value = 24f, TextUnitType.Sp), color = Color.White)
-
-    }
-    BottomNav(navController)
+        }
+        BottomNav(navController)
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harsh_kumar.meals.apiService.mealService
-import com.harsh_kumar.meals.types.Meal
+import com.harsh_kumar.meals.model.Meal
 import kotlinx.coroutines.launch
 
 class SearchMealViewModel: ViewModel() {

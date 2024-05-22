@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RentalsTheme {
                 Navigation()
-                }
             }
         }
+    }
 }

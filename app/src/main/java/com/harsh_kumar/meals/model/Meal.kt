@@ -1,4 +1,4 @@
-package com.harsh_kumar.meals.types
+package com.harsh_kumar.meals.model
 
 data class Meal (
     val strMeal: String,
@@ -7,5 +7,3 @@ data class Meal (
     val strMealThumb:String,
     val strYoutube:String?,
 )
-data class MealResponse(val meals: List<Meal>)
-
