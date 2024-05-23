@@ -131,7 +131,7 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp, vertical = 8.dp),
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.Serif
                     )
 
