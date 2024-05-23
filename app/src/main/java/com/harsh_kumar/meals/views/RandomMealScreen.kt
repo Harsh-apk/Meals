@@ -7,18 +7,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.PlayArrow
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,8 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -42,25 +45,34 @@ import com.harsh_kumar.meals.viewModels.RandomMealViewModel
 @Composable
 
 fun RandomMealScreen(navController: NavController) {
-    val randomMealViewModel :RandomMealViewModel = viewModel();
-    val viewState by randomMealViewModel.randomMeal
+    val randomMealViewModel: RandomMealViewModel = viewModel()
+    val randomMealState by randomMealViewModel.randomMeal
 
-    Box(modifier = Modifier.fillMaxSize()){
-        when{
-            viewState.loading->{
-                Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center ) {
-                    Text(text = "Loading ... ")
+    Box(modifier = Modifier.fillMaxSize()) {
+        when {
+            randomMealState.loading -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator()
+                    //Text(text = "Loading ... ")
                 }
             }
-            viewState.error!=null ->{
-                Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center ) {
-                    Text(text = viewState.error!!,color= Color.Red)
+
+            randomMealState.error != null -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = randomMealState.error!!, color = Color.Red)
                 }
             }
-            else ->{
-                viewState.meal?.let { RandomMealItem(it,navController) }
+
+            else -> {
+                randomMealState.meal?.let { RandomMealItem(it, navController) }
             }
         }
     }
@@ -69,7 +81,7 @@ fun RandomMealScreen(navController: NavController) {
 @Composable
 fun RandomMealItem(meal: Meal, navController: NavController) {
     val context = LocalContext.current
-    var intent :Intent
+    var intent: Intent
 
     Column(
         modifier = Modifier
@@ -77,68 +89,100 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
             .background(color = GreenBg),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
 
-            painter = rememberAsyncImagePainter(meal.strMealThumb),
-            contentDescription = "Thumbnail Image of Meal",
-            modifier = Modifier
-                .padding(top = 70.dp)
-                .clip(
-                    RoundedCornerShape(100)
-                )
-        )
+        MealImage(meal.thumbnail)
+
         Text(
-            meal.strMeal,
+            text = meal.name,
             fontSize = TextUnit(24F, TextUnitType.Sp),
-            color = Color.White,
-            modifier = Modifier.padding(top = 20.dp),
+            color = Color.LightGray,
+            modifier = Modifier.padding(vertical = 20.dp, horizontal = 16.dp),
             fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Serif
         )
 
         Box(
             modifier = Modifier
                 .fillMaxHeight(0.85f)
                 .fillMaxWidth()
-                .clip(
-                    RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp)
-                )
-                .background(color = Color.White)
-                .padding(20.dp)
+                .clip(RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp))
+            //.background(color = Color.LightGray)
+            //.padding(12.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp))
+                    .background(color = MaterialTheme.colorScheme.background)
+            ) {
 
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-        )
-        {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-
-                Text(
-                    text = "Instructions",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = TextUnit(24F, TextUnitType.Sp),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(text = meal.strInstructions, modifier = Modifier.padding(top = 20.dp))
-                if (meal.strYoutube != null) {
-                    IconButton(
-                        onClick = {
-                            intent = Intent(Intent.ACTION_VIEW, Uri.parse(meal.strYoutube))
-                            context.startActivity(intent)
-                        }, modifier = Modifier
-                            .padding(top = 20.dp)
+                    /*Text(
+                        text = "Instructions",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = TextUnit(24F, TextUnitType.Sp),
+                        modifier = Modifier
                             .fillMaxWidth()
-                    ) {
-                        Icon(
-                            Icons.Sharp.PlayArrow,
-                            contentDescription = "Play Button",
-                            modifier = Modifier
-                                .size(100.dp)
-                                .align(Alignment.CenterHorizontally)
-                        )
+                            .padding(horizontal = 8.dp),
+                        color = MaterialTheme.colorScheme.background,
+                        fontFamily = FontFamily.Serif
+                    )*/
+
+                    Text(
+                        text = meal.instructions,
+                        modifier = Modifier.padding(top = 12.dp, start = 8.dp, end = 8.dp),
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+
+                    if (meal.youtubeLink != null) {
+                        Button(
+                            onClick = {
+                                intent = Intent(Intent.ACTION_VIEW, Uri.parse(meal.youtubeLink))
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier.padding(top = 20.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = GreenBg,
+                                contentColor = MaterialTheme.colorScheme.onBackground
+                            )
+                        ) {
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    Icons.Sharp.PlayArrow,
+                                    contentDescription = "Play Button",
+                                )
+                                Text(text = "Preview", modifier = Modifier.padding(start = 8.dp))
+                            }
+
+                        }
                     }
 
-                }
+                } // Column
             }
-        }
+        } // Box
+
         BottomNav(navController = navController)
+
     }
+}
+
+@Composable
+fun MealImage(thumbnail: String?) {
+    Image(
+        painter = rememberAsyncImagePainter(thumbnail),
+        contentDescription = "Thumbnail Image of Meal",
+        modifier = Modifier
+            .padding(top = 50.dp)
+            .clip(RoundedCornerShape(10)),
+    )
 }
