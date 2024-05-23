@@ -168,7 +168,7 @@ fun MealList(meals: List<Meal>) {
 
 @Composable
 fun MealCard(meal: Meal) {
-    var expanded by remember { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
