@@ -6,50 +6,40 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harsh_kumar.meals.apiService.mealService
-import com.harsh_kumar.meals.types.Meal
+import com.harsh_kumar.meals.model.SearchMealState
 import kotlinx.coroutines.launch
 
-class SearchMealViewModel: ViewModel() {
-    data class SearchMealState(
-        val loading: Boolean = false,
-        val meal: List<Meal>?=null,
-        val error: String? = null
+class SearchMealViewModel : ViewModel() {
 
-    )
-    val searchQuery : MutableState<String> = mutableStateOf("Search")
-    val _searchMealState = mutableStateOf(SearchMealState())
-    val searchMealState : State<SearchMealState> = _searchMealState
+    val searchQuery: MutableState<String> = mutableStateOf("")
+    private val _searchMealState = mutableStateOf(SearchMealState())
+    val searchMealState: State<SearchMealState> = _searchMealState
 
-    init{
+    class MyException(message: String) : Exception(message)
 
-    }
-    class MyException(message:String): Exception(message)
-
-    fun fetchSearchMeal( ) = try{
-        if(searchQuery.value=="Search"||searchQuery.value.isEmpty()){
+    fun fetchSearchMeal() = try {
+        if (searchQuery.value.isEmpty()) {
             throw MyException(message = "Meal name can't be empty")
         } else {
             _searchMealState.value = _searchMealState.value.copy(
                 loading = true,
-                meal = null,
+                meals = null,
                 error = null,
             )
             viewModelScope.launch {
-               val searchResponse =  mealService.searchMeal(searchQuery.value!!)
+                val searchResponse = mealService.searchMeal(searchQuery.value)
                 _searchMealState.value = _searchMealState.value.copy(
                     loading = false,
-                    meal = searchResponse.meals,
+                    meals = searchResponse.meals,
                     error = null,
                 )
             }
-
         }
 
-
-    }catch (e:Exception){
+    } catch (e: Exception) {
         _searchMealState.value = _searchMealState.value.copy(
             loading = false,
-            meal = null,
+            meals = null,
             error = "Error : ${e.message}",
         )
     }

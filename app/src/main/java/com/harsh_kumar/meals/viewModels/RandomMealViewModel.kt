@@ -5,41 +5,35 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harsh_kumar.meals.apiService.mealService
-import com.harsh_kumar.meals.types.Meal
-import com.harsh_kumar.meals.types.MealResponse
+import com.harsh_kumar.meals.model.MealResponse
+import com.harsh_kumar.meals.model.RandomMealState
 import kotlinx.coroutines.launch
 
-class RandomMealViewModel: ViewModel() {
+class RandomMealViewModel : ViewModel() {
     private val _randomMealState = mutableStateOf(RandomMealState())
     val randomMeal: State<RandomMealState> = _randomMealState
 
-    init{
+    init {
         fetchMeals()
     }
 
-    data class RandomMealState(
-        val loading: Boolean = true,
-        val meal:Meal?=null,
-        val error: String? = null
-    )
-    private fun fetchMeals(){
+    private fun fetchMeals() {
         viewModelScope.launch {
-            try{
-                val response:MealResponse = mealService.getRandomMeal()
+            try {
+                val response: MealResponse = mealService.getRandomMeal()
                 _randomMealState.value = _randomMealState.value.copy(
                     loading = false,
-                    meal = response.meals[0],
+                    meal = response.meals.firstOrNull(),
                     error = null,
                 )
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 _randomMealState.value = _randomMealState.value.copy(
                     loading = false,
                     meal = null,
-                    error = "Error fetching a  random meal : ${e.message}",
+                    error = "Error fetching a random meal : ${e.message}",
                 )
             }
         }
     }
-
 
 }
