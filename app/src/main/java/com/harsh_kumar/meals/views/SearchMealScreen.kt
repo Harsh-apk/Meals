@@ -1,5 +1,7 @@
 package com.harsh_kumar.meals.views
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,9 +15,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -32,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontFamily
@@ -81,6 +87,7 @@ fun SearchMealMainScreen(navController: NavController) {
                         .padding(horizontal = 2.dp)
                         .fillMaxWidth(0.95F)
                         .clip(RoundedCornerShape(30.dp)),
+                    singleLine = true,
                     placeholder = { Text(text = "Hungry? Search for your favorite dish!") },
                     trailingIcon = {
                         IconButton(
@@ -100,7 +107,9 @@ fun SearchMealMainScreen(navController: NavController) {
                     },
                     colors = TextFieldDefaults.colors(
                         focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface
                     )
                 )
             }
@@ -141,7 +150,7 @@ fun SearchMealMainScreen(navController: NavController) {
 }
 
 @Composable
-private fun BoxText(error: String) {
+fun BoxText(error: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -159,16 +168,17 @@ private fun BoxText(error: String) {
 
 @Composable
 fun MealList(meals: List<Meal>) {
+    val context = LocalContext.current
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(meals) { meal ->
-            MealCard(meal = meal)
+            MealCard(meal = meal, context = context)
         }
     }
 }
 
 @Composable
-fun MealCard(meal: Meal) {
-    var expanded by remember { mutableStateOf(false) }
+fun MealCard(meal: Meal, context: Context) {
+    var expanded by remember { mutableStateOf(true) }
 
     Column(
         modifier = Modifier
@@ -191,7 +201,7 @@ fun MealCard(meal: Meal) {
                 text = meal.name,
                 modifier = Modifier
                     .padding(top = 10.dp),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.Serif
             )
@@ -216,6 +226,36 @@ fun MealCard(meal: Meal) {
                 color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.Serif
             )
+
+            Button(
+                onClick = {
+                    val contentToShare = "${meal.name}\n\n${meal.instructions}"
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, contentToShare)
+                    }
+                    context.startActivity(Intent.createChooser(shareIntent, null))
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = GreenBg,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                ),
+                modifier = Modifier.padding(top = 12.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Share recipe"
+                    )
+                    Text(
+                        text = "Share",
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+            }
         }
 
     }

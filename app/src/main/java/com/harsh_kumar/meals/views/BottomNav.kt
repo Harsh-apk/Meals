@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
@@ -16,7 +15,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.harsh_kumar.meals.views.AllScreen.*
@@ -31,7 +29,11 @@ fun BottomNav(navController: NavController) {
             .fillMaxWidth()
             .padding(20.dp),
     ) {
-        IconButton(onClick = { navController.navigate(SearchMealScreen.route) }) {
+        IconButton(onClick = {
+            navController.navigate(SearchMealScreen.route) {
+                popUpTo(RandomMealScreen.route) { inclusive = false }
+            }
+        }) {
             Icon(
                 Icons.Rounded.Search,
                 contentDescription = "Search",
@@ -40,7 +42,9 @@ fun BottomNav(navController: NavController) {
             )
         }
 
-        IconButton(onClick = { navController.navigate(RandomMealScreen.route) }) {
+        IconButton(onClick = {
+            navController.navigate(RandomMealScreen.route)
+        }) {
             Icon(
                 Icons.Rounded.Home,
                 contentDescription = "Home",
@@ -49,7 +53,11 @@ fun BottomNav(navController: NavController) {
             )
         }
 
-        IconButton(onClick = { navController.navigate(FavoriteScreen.route) }) {
+        IconButton(onClick = {
+            navController.navigate(FavoriteScreen.route) {
+                popUpTo(RandomMealScreen.route) { inclusive = false }
+            }
+        }) {
             Icon(
                 Icons.Rounded.Favorite,
                 contentDescription = "Favorite",
