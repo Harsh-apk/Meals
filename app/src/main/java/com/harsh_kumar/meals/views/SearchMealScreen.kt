@@ -87,6 +87,7 @@ fun SearchMealMainScreen(navController: NavController) {
                         .padding(horizontal = 2.dp)
                         .fillMaxWidth(0.95F)
                         .clip(RoundedCornerShape(30.dp)),
+                    singleLine = true,
                     placeholder = { Text(text = "Hungry? Search for your favorite dish!") },
                     trailingIcon = {
                         IconButton(
@@ -106,7 +107,9 @@ fun SearchMealMainScreen(navController: NavController) {
                     },
                     colors = TextFieldDefaults.colors(
                         focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.inverseOnSurface
                     )
                 )
             }
@@ -198,7 +201,7 @@ fun MealCard(meal: Meal, context: Context) {
                 text = meal.name,
                 modifier = Modifier
                     .padding(top = 10.dp),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.Serif
             )
@@ -226,7 +229,7 @@ fun MealCard(meal: Meal, context: Context) {
 
             Button(
                 onClick = {
-                    val contentToShare = "${meal.name}\n${meal.instructions}"
+                    val contentToShare = "${meal.name}\n\n${meal.instructions}"
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "text/plain"
                         putExtra(Intent.EXTRA_TEXT, contentToShare)
@@ -236,7 +239,8 @@ fun MealCard(meal: Meal, context: Context) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = GreenBg,
                     contentColor = MaterialTheme.colorScheme.onBackground
-                )
+                ),
+                modifier = Modifier.padding(top = 12.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
