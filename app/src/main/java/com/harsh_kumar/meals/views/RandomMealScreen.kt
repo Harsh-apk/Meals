@@ -1,5 +1,6 @@
 package com.harsh_kumar.meals.views
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -16,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.sharp.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -43,7 +45,6 @@ import com.harsh_kumar.meals.ui.theme.GreenBg
 import com.harsh_kumar.meals.viewModels.RandomMealViewModel
 
 @Composable
-
 fun RandomMealScreen(navController: NavController) {
     val randomMealViewModel: RandomMealViewModel = viewModel()
     val randomMealState by randomMealViewModel.randomMeal
@@ -140,30 +141,68 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                         color = MaterialTheme.colorScheme.onBackground
                     )
 
-                    if (meal.youtubeLink != null) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        if (meal.youtubeLink != null) {
+                            Button(
+                                onClick = {
+                                    intent = Intent(Intent.ACTION_VIEW, Uri.parse(meal.youtubeLink))
+                                    context.startActivity(intent)
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = GreenBg,
+                                    contentColor = MaterialTheme.colorScheme.onBackground
+                                )
+                            ) {
+
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        Icons.Sharp.PlayArrow,
+                                        contentDescription = "Play Button",
+                                    )
+                                    Text(
+                                        text = "Preview",
+                                        modifier = Modifier.padding(start = 8.dp)
+                                    )
+                                }
+
+                            }
+                        }
+
                         Button(
                             onClick = {
-                                intent = Intent(Intent.ACTION_VIEW, Uri.parse(meal.youtubeLink))
-                                context.startActivity(intent)
+                                val contentToShare = "${meal.name}\n${meal.instructions}"
+                                intent = Intent(Intent.ACTION_SEND).apply {
+                                    type = "text/plain"
+                                    putExtra(Intent.EXTRA_TEXT, contentToShare)
+                                }
+                                context.startActivity(Intent.createChooser(intent, null))
                             },
-                            modifier = Modifier.padding(top = 20.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = GreenBg,
                                 contentColor = MaterialTheme.colorScheme.onBackground
                             )
                         ) {
-
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Icon(
-                                    Icons.Sharp.PlayArrow,
-                                    contentDescription = "Play Button",
+                                    imageVector = Icons.Default.Share,
+                                    contentDescription = "Share recipe"
                                 )
-                                Text(text = "Preview", modifier = Modifier.padding(start = 8.dp))
+                                Text(
+                                    text = "Share",
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
                             }
-
                         }
                     }
 

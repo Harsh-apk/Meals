@@ -1,5 +1,7 @@
 package com.harsh_kumar.meals.views
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,9 +15,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -32,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontFamily
@@ -141,7 +147,7 @@ fun SearchMealMainScreen(navController: NavController) {
 }
 
 @Composable
-private fun BoxText(error: String) {
+fun BoxText(error: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -159,15 +165,16 @@ private fun BoxText(error: String) {
 
 @Composable
 fun MealList(meals: List<Meal>) {
+    val context = LocalContext.current
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(meals) { meal ->
-            MealCard(meal = meal)
+            MealCard(meal = meal, context = context)
         }
     }
 }
 
 @Composable
-fun MealCard(meal: Meal) {
+fun MealCard(meal: Meal, context: Context) {
     var expanded by remember { mutableStateOf(true) }
 
     Column(
@@ -216,6 +223,35 @@ fun MealCard(meal: Meal) {
                 color = MaterialTheme.colorScheme.onBackground,
                 fontFamily = FontFamily.Serif
             )
+
+            Button(
+                onClick = {
+                    val contentToShare = "${meal.name}\n${meal.instructions}"
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, contentToShare)
+                    }
+                    context.startActivity(Intent.createChooser(shareIntent, null))
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = GreenBg,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Share recipe"
+                    )
+                    Text(
+                        text = "Share",
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+            }
         }
 
     }
