@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
@@ -104,15 +105,15 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
 
         Box(
             modifier = Modifier
-                .fillMaxHeight(0.85f)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp))
+                .clip(RoundedCornerShape(30.dp))
             //.background(color = Color.LightGray)
             //.padding(12.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp))
+                    .fillMaxHeight(0.85f)
+                    .fillMaxWidth(0.95f)
+                    .clip(RoundedCornerShape(30.dp))
                     .background(color = MaterialTheme.colorScheme.background)
             ) {
 
@@ -123,17 +124,17 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    /*Text(
-                        text = "Instructions",
+                    Text(
+                        text = "Recipe",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         fontSize = TextUnit(24F, TextUnitType.Sp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
-                        color = MaterialTheme.colorScheme.background,
+                            .padding(horizontal = 8.dp, vertical = 8.dp),
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontFamily = FontFamily.Serif
-                    )*/
+                    )
 
                     Text(
                         text = meal.instructions,
