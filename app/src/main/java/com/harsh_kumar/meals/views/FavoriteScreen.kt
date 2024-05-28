@@ -11,21 +11,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import androidx.navigation.NavController
 import com.harsh_kumar.meals.ui.theme.GreenBg
 
 @Composable
-fun FavoriteScreen(navController: NavController) {
-    Column(modifier = Modifier.fillMaxSize()) {
+fun FavoriteScreen(modifier: Modifier = Modifier) {
 
+    Column(modifier = Modifier.fillMaxSize().then(modifier)) {
         Column(
             modifier = Modifier
                 .background(color = GreenBg)
                 .fillMaxWidth()
-                .fillMaxHeight(0.92f),
+                .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -35,8 +33,7 @@ fun FavoriteScreen(navController: NavController) {
                 fontSize = TextUnit(value = 24f, TextUnitType.Sp),
                 color = MaterialTheme.colorScheme.background
             )
-
         }
-        BottomNav(navController)
     }
+
 }
