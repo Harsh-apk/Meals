@@ -3,7 +3,6 @@ package com.harsh_kumar.meals.views
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -47,9 +47,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.harsh_kumar.meals.model.IngredientWithMeasurement
 import com.harsh_kumar.meals.model.Meal
 import com.harsh_kumar.meals.ui.theme.GreenBg
@@ -74,7 +72,10 @@ fun BoxText(error: String) {
 @Composable
 fun MealList(meals: List<Meal>) {
     val context = LocalContext.current
-    LazyColumn(modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(vertical = 4.dp)) {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(vertical = 4.dp)
+    ) {
         items(meals) { meal ->
             MealCard(meal = meal, context = context)
             HorizontalDivider(thickness = 2.dp)
@@ -93,10 +94,8 @@ fun MealCard(meal: Meal, context: Context) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        AsyncImage(
-            model = meal.thumbnail,
-            contentDescription = "Image of meal",
-            modifier = Modifier
+        MealImage(
+            thumbnail = meal.thumbnail, modifier = Modifier
                 .padding(top = 12.dp)
                 .clip(RoundedCornerShape(30.dp))
         )
@@ -202,13 +201,11 @@ fun MealCard(meal: Meal, context: Context) {
 }
 
 @Composable
-fun MealImage(thumbnail: String?) {
-    Image(
-        painter = rememberAsyncImagePainter(thumbnail),
+fun MealImage(thumbnail: String?, modifier: Modifier = Modifier) {
+    AsyncImage(
+        model = thumbnail,
         contentDescription = "Thumbnail Image of Meal",
-        modifier = Modifier
-            .padding(top = 36.dp)
-            .clip(RoundedCornerShape(10)),
+        modifier = modifier
     )
 }
 
@@ -236,7 +233,7 @@ fun Ingredients(ingredients: List<IngredientWithMeasurement>, modifier: Modifier
 }
 
 @Composable
-fun RandomMealItem(meal: Meal, navController: NavController) {
+fun RandomMealItem(meal: Meal) {
     val context = LocalContext.current
     var intent: Intent
 
@@ -247,7 +244,12 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        MealImage(meal.thumbnail)
+        MealImage(
+            thumbnail = meal.thumbnail,
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .clip(RoundedCornerShape(30.dp))
+        )
 
         Text(
             text = meal.name,
@@ -261,23 +263,16 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
         Text(
             text = "origin: " + meal.origin,
             color = Color.LightGray,
-            modifier = Modifier.padding(bottom = 12.dp),
             fontWeight = FontWeight.Thin,
             fontFamily = FontFamily.Serif,
             fontStyle = FontStyle.Italic
         )
 
-        Box(
-            modifier = Modifier.clip(RoundedCornerShape(30.dp))
-            //.background(color = Color.LightGray)
-            //.padding(12.dp)
-        ) {
+        Box(modifier = Modifier.clip(RoundedCornerShape(30.dp))) {
             Box(
                 modifier = Modifier
-                    .padding(8.dp)
-                    //.fillMaxSize()
-                    //.fillMaxHeight(0.85f)
                     .fillMaxWidth(0.95f)
+                    .wrapContentSize()
                     .clip(RoundedCornerShape(30.dp))
                     .background(color = MaterialTheme.colorScheme.background)
             ) {
@@ -285,7 +280,7 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                        .padding(8.dp),
+                        .padding(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
@@ -329,7 +324,7 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp),
+                            .padding(vertical = 4.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         if (meal.youtubeLink != null) {
@@ -394,8 +389,5 @@ fun RandomMealItem(meal: Meal, navController: NavController) {
                 } // Column
             }
         } // Box
-
-        BottomNav(navController = navController)
-
     }
 }

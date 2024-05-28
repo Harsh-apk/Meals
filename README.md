@@ -1,20 +1,61 @@
 # Meals
 
-## A simple open source app that suggests you random meals with instructions and video recipe to cook by yourself.
+## This Recipe App allows users to search for and save their favorite recipes. Users can also view detailed instructions and ingredients for each recipe.
 
-Made with ❤️ in Native Android using:
+### Getting Started:
+
+1. Clone the project repository:
+
+```bash
+git clone https://github.com/Harsh-apk/Meals.git
+```
+
+2. Open the project in Android Studio IDE.
+3. Install the necessary dependencies.
+4. Build and run the project.
+
+### Snaps:
+
+| Random Meal                     | Random Meal                      | Favourite Screen                 |
+|---------------------------------|----------------------------------|----------------------------------|
+| [](/snaps/RandomMeal.png)       | [](/snaps/RandomMeal1.png)       | [](/snaps/FavouriteScreen.png)   |
+| Search Meal                     | Search Meal Result               | Search Meal Result               |
+| [](/snaps/SearchMealScreen.png) | [](/snaps/SearchMealResult0.png) | [](/snaps/SearchMealResult1.png) |
+
+### Usage:
+
+1. To search for a recipe, enter the name or ingredient into the search bar and click "Search".
+2. A list of matching recipes will be displayed.
+3. Click on a recipe to view its details.
+4. To save a recipe to your favorites list, click the "Save" button.
+5. To share a recipe, click the "Share" button.
+
+### Contributing:
+
+Contributions to the Recipe App are welcome!
+
+### License:
+
+The Recipe App is licensed under the Apache License 2.0. See the LICENSE file for more information.
+
+### Contact:
+
+For any questions or inquiries, please contact the project maintainers.
+
+### Additional Information:
+
+__Built with ❤️ in Native Android using:__
+
 * Kotlin,
 * Jetpack Compose,
 * Jetpack Navigation,
+* MVVM architecture
 * Material3 icons,
 * Coil for image loading,
+* GSON
 * Retrofit and
-* [Free meal API](https://www.themealdb.com/) free api.
+* [Free meal API](https://www.themealdb.com/)
 
-* Would love to see some contributions to this project :)
+* The app is currently in development and new features are being added regularly.
 
-![Screenshot_20240523_165323](https://github.com/Harsh-apk/Meals/assets/129182272/6bb759a5-75cc-4819-85a9-dc73ecd142d9)
-![Screenshot_20240523_165359](https://github.com/Harsh-apk/Meals/assets/129182272/dacdfdfc-6c7e-4aae-97dd-16d3ae16e62a)
-![Screenshot_20240523_165453](https://github.com/Harsh-apk/Meals/assets/129182272/3a6e5834-de10-4b87-b89a-e2ef268df802)
-![Screenshot_20240523_165509](https://github.com/Harsh-apk/Meals/assets/129182272/c03f40a4-48c4-497f-8043-06eefda2f51c)
-![Screenshot_20240521_101923](https://github.com/Harsh-apk/Meals/assets/129182272/73295afb-5572-4076-885d-d5a0a01d5154)
+* Enjoy using the Recipe App!

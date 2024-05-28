@@ -1,23 +1,27 @@
 package com.harsh_kumar.meals.views
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.harsh_kumar.meals.views.AllScreen.*
+import com.harsh_kumar.meals.views.Screen.FavoriteScreen
+import com.harsh_kumar.meals.views.Screen.RandomMealScreen
+import com.harsh_kumar.meals.views.Screen.SearchMealScreen
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = RandomMealScreen.route) {
+fun Navigation(navHostController: NavHostController, innerPadding: PaddingValues) {
+    NavHost(navController = navHostController, startDestination = RandomMealScreen.route) {
         composable(route = RandomMealScreen.route) {
-            RandomMealScreen(navController = navController)
+            RandomMealScreen(modifier = Modifier.padding(innerPadding))
         }
         composable(route = SearchMealScreen.route) {
-            SearchMealMainScreen(navController = navController)
+            SearchMealScreen(modifier = Modifier.padding(innerPadding))
         }
         composable(route = FavoriteScreen.route) {
-            FavoriteScreen(navController = navController)
+            FavoriteScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }

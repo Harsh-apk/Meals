@@ -5,29 +5,30 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Shuffle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.harsh_kumar.meals.views.AllScreen.*
+import androidx.navigation.NavHostController
 import com.harsh_kumar.meals.ui.theme.GreenBg
+import com.harsh_kumar.meals.views.Screen.FavoriteScreen
+import com.harsh_kumar.meals.views.Screen.RandomMealScreen
+import com.harsh_kumar.meals.views.Screen.SearchMealScreen
 
 @Composable
-fun BottomNav(navController: NavController) {
+fun BottomNav(navController: NavHostController) {
     Row(
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .background(color = GreenBg)
             .fillMaxWidth()
-            .padding(20.dp),
+            .padding(bottom = 16.dp),
     ) {
         IconButton(onClick = {
             navController.navigate(SearchMealScreen.route) {
@@ -38,7 +39,6 @@ fun BottomNav(navController: NavController) {
                 Icons.Rounded.Search,
                 contentDescription = "Search",
                 tint = MaterialTheme.colorScheme.background,
-                modifier = Modifier.size(100.dp)
             )
         }
 
@@ -46,10 +46,9 @@ fun BottomNav(navController: NavController) {
             navController.navigate(RandomMealScreen.route)
         }) {
             Icon(
-                Icons.Rounded.Home,
+                Icons.Rounded.Shuffle,
                 contentDescription = "Home",
                 tint = MaterialTheme.colorScheme.background,
-                modifier = Modifier.size(100.dp)
             )
         }
 
@@ -61,8 +60,7 @@ fun BottomNav(navController: NavController) {
             Icon(
                 Icons.Rounded.Favorite,
                 contentDescription = "Favorite",
-                tint = MaterialTheme.colorScheme.background,
-                modifier = Modifier.size(100.dp)
+                tint = MaterialTheme.colorScheme.background
             )
         }
 
