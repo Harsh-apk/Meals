@@ -1,6 +1,6 @@
-# Meals
+# Meals <img align="right" src="app/src/main/ic_launcher-playstore.png" width=125 height=125 style ="padding:4px" alt="App Logo">
 
-## This Recipe App allows users to search for and save their favorite recipes. Users can also view detailed instructions and ingredients for each recipe.
+### This Recipe App allows users to search for and save their favorite recipes. Users can also view detailed instructions and ingredients for each recipe.
 
 ### Getting Started:
 
@@ -16,11 +16,11 @@ git clone https://github.com/Harsh-apk/Meals.git
 
 ### Snaps:
 
-| Random Meal                     | Random Meal                      | Favourite Screen                 |
-|---------------------------------|----------------------------------|----------------------------------|
-| [](/snaps/RandomMeal.png)       | [](/snaps/RandomMeal1.png)       | [](/snaps/FavouriteScreen.png)   |
-| Search Meal                     | Search Meal Result               | Search Meal Result               |
-| [](/snaps/SearchMealScreen.png) | [](/snaps/SearchMealResult0.png) | [](/snaps/SearchMealResult1.png) |
+| Random Meal                      | Random Meal                       | Favourite Screen                  |
+|----------------------------------|-----------------------------------|-----------------------------------|
+| ![](/snaps/RandomMeal.png)       | ![](/snaps/RandomMeal1.png)       | ![](/snaps/FavouriteScreen.png)   |
+| Search Meal                      | Search Meal Result                | Search Meal Result                |
+| ![](/snaps/SearchMealScreen.png) | ![](/snaps/SearchMealResult0.png) | ![](/snaps/SearchMealResult1.png) |
 
 ### Usage:
 
@@ -34,10 +34,6 @@ git clone https://github.com/Harsh-apk/Meals.git
 
 Contributions to the Recipe App are welcome!
 
-### License:
-
-The Recipe App is licensed under the Apache License 2.0. See the LICENSE file for more information.
-
 ### Contact:
 
 For any questions or inquiries, please contact the project maintainers.
@@ -49,13 +45,13 @@ __Built with ❤️ in Native Android using:__
 * Kotlin,
 * Jetpack Compose,
 * Jetpack Navigation,
-* MVVM architecture
+* MVVM architecture,
 * Material3 icons,
 * Coil for image loading,
-* GSON
+* GSON,
 * Retrofit and
 * [Free meal API](https://www.themealdb.com/)
 
-* The app is currently in development and new features are being added regularly.
+The app is currently in development and new features are being added regularly.
 
-* Enjoy using the Recipe App!
+__* Enjoy using the Meals App!__
